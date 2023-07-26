@@ -1422,13 +1422,13 @@ Qframe{
                              <widget class="QLabel" name="n_detected_objects_label">
                               <property name="minimumSize">
                                <size>
-                                <width>0</width>
+                                <width>100</width>
                                 <height>35</height>
                                </size>
                               </property>
                               <property name="maximumSize">
                                <size>
-                                <width>16777215</width>
+                                <width>100</width>
                                 <height>35</height>
                                </size>
                               </property>
@@ -3998,14 +3998,14 @@ QTableWidget {
 
 </string>
                              </property>
-                             <attribute name="horizontalHeaderMinimumSectionSize">
-                              <number>40</number>
-                             </attribute>
                              <attribute name="horizontalHeaderDefaultSectionSize">
                               <number>140</number>
                              </attribute>
                              <attribute name="horizontalHeaderHighlightSections">
                               <bool>true</bool>
+                             </attribute>
+                             <attribute name="horizontalHeaderMinimumSectionSize">
+                              <number>40</number>
                              </attribute>
                              <column>
                               <property name="text">
@@ -4892,20 +4892,20 @@ QTableWidget {
                              <attribute name="horizontalHeaderCascadingSectionResizes">
                               <bool>false</bool>
                              </attribute>
-                             <attribute name="horizontalHeaderMinimumSectionSize">
-                              <number>45</number>
-                             </attribute>
                              <attribute name="horizontalHeaderDefaultSectionSize">
                               <number>172</number>
                              </attribute>
                              <attribute name="horizontalHeaderHighlightSections">
                               <bool>true</bool>
                              </attribute>
-                             <attribute name="verticalHeaderMinimumSectionSize">
-                              <number>25</number>
+                             <attribute name="horizontalHeaderMinimumSectionSize">
+                              <number>45</number>
                              </attribute>
                              <attribute name="verticalHeaderDefaultSectionSize">
                               <number>35</number>
+                             </attribute>
+                             <attribute name="verticalHeaderMinimumSectionSize">
+                              <number>25</number>
                              </attribute>
                              <column>
                               <property name="text">
@@ -5985,11 +5985,11 @@ QTableWidget {
                           <property name="autoScrollMargin">
                            <number>20</number>
                           </property>
-                          <attribute name="horizontalHeaderMinimumSectionSize">
-                           <number>50</number>
-                          </attribute>
                           <attribute name="horizontalHeaderDefaultSectionSize">
                            <number>129</number>
+                          </attribute>
+                          <attribute name="horizontalHeaderMinimumSectionSize">
+                           <number>50</number>
                           </attribute>
                           <column>
                            <property name="text">
