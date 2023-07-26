@@ -1,0 +1,3 @@
+D:\
+cd D:\Pellet_grading_new
+python main.py
