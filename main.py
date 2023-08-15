@@ -536,6 +536,7 @@ class Ui(QtWidgets.QMainWindow):
                                       frame_transmission_delay=0, width=2448, height=2048, offet_x=0, offset_y=0,
                                        manual=True, list_devices_mode=False, trigger_source='Software')
                 res, _ = self.collector.start_grabbing()
+                self.label_fps.setText(str(collector.get_fps()))
                 # print(res)
                 if not res:
                     self.show_message(label_name=None, text=texts.ERRORS['camera_connect_failed'][self.language], level=2, clearable=True)
