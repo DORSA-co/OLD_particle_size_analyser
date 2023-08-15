@@ -536,12 +536,12 @@ class Ui(QtWidgets.QMainWindow):
                                       frame_transmission_delay=0, width=2448, height=2048, offet_x=0, offset_y=0,
                                        manual=True, list_devices_mode=False, trigger_source='Software')
                 res, _ = self.collector.start_grabbing()
-                self.label_fps.setText(str(collector.get_fps()))
+                
                 # print(res)
                 if not res:
                     self.show_message(label_name=None, text=texts.ERRORS['camera_connect_failed'][self.language], level=2, clearable=True)
                     return
-
+                self.label_fps.setText(str(self.collector.get_fps()))
                 # camera connected, update ui fileds
                 self.show_message(label_name=None, text=texts.MESSEGES['camera_connect'][self.language], level=0, clearable=True)
                 self.camera_connect_flag = True
@@ -684,6 +684,7 @@ class Ui(QtWidgets.QMainWindow):
             # self.process_worker.show_image.connect(partial(self.set_image_on_label_calib))
             self.process_worker.update_chart.connect(partial(self.update_grading_chart))
             self.process_worker.update_n_detected.connect(partial(self.set_text_on_label))
+            self.process_worker.camera_pfs.connect(partial(self.set_text_on_label))
             self.process_thread.finished.connect(partial(self.process_thread.deleteLater))
             self.process_thread.start()
 

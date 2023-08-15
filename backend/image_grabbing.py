@@ -68,6 +68,7 @@ class Image_Process_Worker(QtCore.QObject):
     show_image = QtCore.pyqtSignal(np.ndarray)
     update_chart = QtCore.pyqtSignal(np.ndarray, np.ndarray)
     update_n_detected = QtCore.pyqtSignal(str, str)
+    camera_pfs = QtCore.pyqtSignal(str, str)
     
 
     def assign_parameters(self, ui_obj):
@@ -96,21 +97,6 @@ class Image_Process_Worker(QtCore.QObject):
 
             # main detection
             detected_image, grading_infoes, circ_acc, n_objects = self.ui_obj.detection_obj.detect(image=frame)
-            # print(grading_infoes.shape)
-            # writer =  pd.ExcelWriter(r'Excel/Grading_Resualt.xlsx')
-
-            # grading_infoes_pd = pd.DataFrame(grading_infoes)
-            # circ_acc_pd = pd.DataFrame(circ_acc)
-            # n_objects_pd = pd.DataFrame(n_objects)
-
-
-            # grading_infoes_pd.to_excel(writer,sheet_name = 'grading infoes',index='False')
-            # circ_acc_pd.to_excel(writer,sheet_name = 'circ acc',index='False')
-            # n_objects_pd.to_excel(writer,sheet_name = 'number of objects',index='False')
-
-            # writer.save()
-
-
 
             # set frame on ui
             self.show_image.emit(detected_image)
@@ -120,14 +106,7 @@ class Image_Process_Worker(QtCore.QObject):
 
             # set n detected objects
             self.update_n_detected.emit('n_detected_objects_label', str(n_objects))
-
-
-            # print(len(self.ui_obj.images_list))
-
-            # time.sleep(0.04)
-            # cv2.imwrite('frames/%s.jpg' % (self.ui_obj.frame_itr), detected_image)
-
-            # print('sdfsd')
+            self.camera_pfs.emit('label_fps', str(round(self.ui_obj.collector.get_fps(), 1)))
                 
                 
         
