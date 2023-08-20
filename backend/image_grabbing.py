@@ -3,7 +3,7 @@ import numpy as np
 import time
 from backend import chart
 import datetime
-TIME_SLEEP = 0.05
+TIME_SLEEP = 0.045
 
 
 class Camera_Image_Grabber_Worker(QtCore.QObject):

@@ -408,7 +408,7 @@ class Grading():
             return
         else:
             for item in ranges_list:
-                print(item)
+                # print(item)
                 if item[database.RANGES_IS_DEFAULT] == 'True':
                     return item[database.RANGES_DESCRIPTION]
                 else:
