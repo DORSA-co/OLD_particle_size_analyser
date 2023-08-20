@@ -3,7 +3,7 @@ import numpy as np
 import time
 from backend import chart
 import datetime
-TIME_SLEEP = 0.045
+TIME_SLEEP = 0.05
 
 
 class Camera_Image_Grabber_Worker(QtCore.QObject):
@@ -29,6 +29,7 @@ class Camera_Image_Grabber_Worker(QtCore.QObject):
         while not self.stop:
             try:
                 # get frame
+                start = time.time()
                 res, frame = self.camera_obj.getPictures()
     
                 if not res:
@@ -47,7 +48,8 @@ class Camera_Image_Grabber_Worker(QtCore.QObject):
                 continue
 
             time.sleep(TIME_SLEEP)
-
+            end = time.time()
+            self.ui_obj.fps = 1/(end-start)
         
         # finish signal
         
@@ -67,8 +69,10 @@ class Image_Process_Worker(QtCore.QObject):
     finished = QtCore.pyqtSignal()
     show_image = QtCore.pyqtSignal(np.ndarray)
     update_chart = QtCore.pyqtSignal(np.ndarray, np.ndarray)
-    update_n_detected = QtCore.pyqtSignal(str, str)
+    # update_n_detected = QtCore.pyqtSignal(str, str)
     camera_pfs = QtCore.pyqtSignal(str, str)
+    #
+    
     
 
     def assign_parameters(self, ui_obj):
@@ -78,6 +82,7 @@ class Image_Process_Worker(QtCore.QObject):
     
     
     def process_frames(self):
+        last_grading_infoes = None
         while not self.stop or len(self.ui_obj.images_list)>0:
             # print(len(self.ui_obj.images_list))
             if len(self.ui_obj.images_list)==0:
@@ -101,14 +106,25 @@ class Image_Process_Worker(QtCore.QObject):
             # set frame on ui
             self.show_image.emit(detected_image)
 
+            #
+            # print(last_grading_infoes, grading_infoes)
+            if last_grading_infoes is not None and (last_grading_infoes==grading_infoes).all():
+                continue
+            else:
+                last_grading_infoes = grading_infoes
+
+            
             # # set to chart
             self.update_chart.emit(grading_infoes, circ_acc)
 
             # set n detected objects
-            self.update_n_detected.emit('n_detected_objects_label', str(n_objects))
-            self.camera_pfs.emit('label_fps', str(round(self.ui_obj.collector.get_fps(), 1)))
+            # self.update_n_detected.emit('n_detected_objects_label', str(n_objects))
+            self.camera_pfs.emit('label_fps', str(round(self.ui_obj.fps, 1)))
+
+            # print('asd:', last_grading_infoes, grading_infoes)
                 
                 
         
         # finish signal
         self.finished.emit()
+        # self.update_chart.emit(np, circ_acc)

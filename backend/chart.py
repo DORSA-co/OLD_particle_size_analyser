@@ -21,6 +21,17 @@ def update_chart(ui_obj, grading_params, circ_acc):
         ui_obj.circ_barset.replace(i, round(param,2))
 
 
+def reset_chart(ui_obj):
+    print('len:', len(ui_obj.algo_params.ranges_dict.keys()))   
+    # for i in range(len(ui_obj.algo_params.ranges_dict.keys())):
+    #     ui_obj.ranges_barset.replace(i, 0)
+    
+    for i in range(5):
+        ui_obj.circ_barset.replace(i, 0)
+    
+    print('chart reset')
+
+
 def update_chart_reports(ui_obj, grading_params, circ_acc):
     # check values not to be nan
     for param in grading_params:

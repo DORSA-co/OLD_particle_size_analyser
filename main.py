@@ -32,7 +32,8 @@ class Ui(QtWidgets.QMainWindow):
         self._old_pos = None
         self.debug = False
 
-
+        #
+        self.fps = 0
         
         # params ui
         # self.params_ui = params_ui.Params_Ui(ui_obj=self)
@@ -84,9 +85,9 @@ class Ui(QtWidgets.QMainWindow):
         self.algo_params.update_params()
         self.cam_settings = camera_settings.get_camera_params_from_ui(self)
         # photoviewer
-        # self.image_viewer = photoviewer.PhotoViewer()
-        # self.image_frame.layout().addWidget(self.image_viewer)
-        self.set_image_on_label(image=None, set_raw=True)
+        self.image_viewer = photoviewer.PhotoViewer()
+        self.image_frame.layout().addWidget(self.image_viewer)
+        self.set_image_on_photoviewer(image=None, set_raw=True)
 
         ##### calibration window
         # self.image_viewer_calibration = photoviewer.PhotoViewer()
@@ -377,7 +378,7 @@ class Ui(QtWidgets.QMainWindow):
             return True if returnValue == QtWidgets.QMessageBox.Ok else False
     
 
-    def set_image_on_label(self, image, set_raw=False):
+    def set_image_on_photoviewer(self, image, set_raw=False):
         """this function is used to set an image to a label
 
         :param label_obj: _description_
@@ -406,14 +407,16 @@ class Ui(QtWidgets.QMainWindow):
         pixmap_image = QtGui.QPixmap(pixmap)
 
         # label_main_frame
-        pixmap_image = pixmap_image.scaled(self.label_main_frame.height(), self.label_main_frame.height(), QtCore.Qt.KeepAspectRatio)
+        # pixmap_image = pixmap_image.scaled(self.label_main_frame.height(), self.label_main_frame.height(), QtCore.Qt.KeepAspectRatio)
         # pixmap_image = pixmap_image.scaled(800, 800, QtCore.Qt.KeepAspectRatio)
-        self.label_main_frame.setPixmap(pixmap_image)
+        # self.label_main_frame.setPixmap(pixmap_image)
         # self.image_frame.setMaximumWidth(self.label_main_frame.height())
         # self.image_frame.setMinimumWidth(self.label_main_frame.height())
         
         # set image on image viewer
-        # self.image_viewer.setPhoto(pixmap=pixmap_image)
+        self.image_viewer.setPhoto(pixmap=pixmap_image)
+        
+
         
     
     def set_image_on_label_calib(self, image, set_raw=False):
@@ -441,7 +444,7 @@ class Ui(QtWidgets.QMainWindow):
         qImg = QtGui.QImage(image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
         pixmap = QtGui.QPixmap.fromImage(qImg)
         pixmap_image = QtGui.QPixmap(pixmap)
-        pixmap_image = pixmap_image.scaled(self.label_main_frame.height(), self.label_main_frame.height(), QtCore.Qt.KeepAspectRatio)
+        pixmap_image = pixmap_image.scaled(self.image_frame.height(), self.image_frame.height(), QtCore.Qt.KeepAspectRatio)
         # pixmap_image = pixmap_image.scaled(800, 800, QtCore.Qt.KeepAspectRatio)
         self.label_cam_setting_frame.setPixmap(pixmap_image)
         # self.graphicsView.setScene(pixmap_image)
@@ -541,7 +544,7 @@ class Ui(QtWidgets.QMainWindow):
                 if not res:
                     self.show_message(label_name=None, text=texts.ERRORS['camera_connect_failed'][self.language], level=2, clearable=True)
                     return
-                self.label_fps.setText(str(self.collector.get_fps()))
+                # self.label_fps.setText(str(self.collector.get_fps()))
                 # camera connected, update ui fileds
                 self.show_message(label_name=None, text=texts.MESSEGES['camera_connect'][self.language], level=0, clearable=True)
                 self.camera_connect_flag = True
@@ -608,7 +611,7 @@ class Ui(QtWidgets.QMainWindow):
         self.stop_capturing_btn_5.setEnabled(False)
         self.update_ui_labels(label=self.camera_capture_label, state=False)
         cv2.waitKey(500)
-        self.set_image_on_label(image=None, set_raw=True)
+        self.set_image_on_photoviewer(image=None, set_raw=True)
         #### connect from setting page
         self.Config_2.setEnabled(True)
         self.report_tab.setEnabled(True)
@@ -680,10 +683,10 @@ class Ui(QtWidgets.QMainWindow):
             # Connect signals and slots
             self.process_thread.started.connect(partial(self.process_worker.process_frames))
             self.process_worker.finished.connect(partial(self.process_thread.quit))
-            self.process_worker.show_image.connect(partial(self.set_image_on_label))
+            self.process_worker.show_image.connect(partial(self.set_image_on_photoviewer))
             # self.process_worker.show_image.connect(partial(self.set_image_on_label_calib))
             self.process_worker.update_chart.connect(partial(self.update_grading_chart))
-            self.process_worker.update_n_detected.connect(partial(self.set_text_on_label))
+            # self.process_worker.update_n_detected.connect(partial(self.set_text_on_label))
             self.process_worker.camera_pfs.connect(partial(self.set_text_on_label))
             self.process_thread.finished.connect(partial(self.process_thread.deleteLater))
             self.process_thread.start()

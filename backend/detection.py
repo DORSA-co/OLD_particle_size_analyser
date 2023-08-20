@@ -16,6 +16,7 @@ import openpyxl
 from backend import calibration_class, database, reports, algo_settings
 import datetime
 import math
+import time
 
 
 
@@ -373,9 +374,12 @@ class Grading():
         self.contours_dict = {}
         self.image_itr = 0
 
+        self.ui_obj.images_list.clear()
+        # time.sleep(1)
+        # cv2.waitKey(2000)
         chart.create_ranges_chart_on_ui(ui_obj=self.ui_obj)
         chart.create_circularity_chart_on_ui(ui_obj=self.ui_obj)
-        self.ui_obj.images_list.clear()
+        # chart.reset_chart(ui_obj=self.ui_obj)
         self.wait_to_save_last_results_flag = False
         logger.logger('reset')
     
@@ -523,7 +527,14 @@ class Grading():
         if self.debug:
             cv2.imshow('Grading Results', cv2.resize(image, None, fx=self.debug_scale, fy=self.debug_scale))
             cv2.waitKey(0)
-        return image, (self.grading_ranges_arr / self.grading_ranges_arr.sum()) * 100, self.circ_acc_array, self.n_objects
+
+        if self.grading_ranges_arr.sum() != 0: 
+            print('n_objrcts: ', self.n_objects)
+            return image, (self.grading_ranges_arr / self.grading_ranges_arr.sum()) * 100, self.circ_acc_array, self.n_objects
+        else:
+            print('n_objrcts: ', self.n_objects)
+            return image, (self.grading_ranges_arr) * 100, self.circ_acc_array, self.n_objects
+
 
 
 
