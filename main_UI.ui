@@ -39,7 +39,11 @@ QTableWidget {
     gridline-color:  #0C508B;
     font-size: 12pt;
 }
-</string>
+
+QLabel{
+	font-size:10pt;
+	font-weight:bold;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -127,7 +131,9 @@ QTableWidget {
          </property>
          <property name="font">
           <font>
-           <family>Times New Roman</family>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="text">
@@ -201,14 +207,9 @@ QTableWidget {
             </property>
             <property name="font">
              <font>
-              <family>Times New Roman</family>
-              <pointsize>15</pointsize>
+              <pointsize>10</pointsize>
               <weight>75</weight>
-              <italic>true</italic>
               <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-              <kerning>true</kerning>
              </font>
             </property>
             <property name="styleSheet">
@@ -914,8 +915,7 @@ min-width:60px;
                         <widget class="QLabel" name="label_23">
                          <property name="font">
                           <font>
-                           <family>Times New Roman</family>
-                           <pointsize>12</pointsize>
+                           <pointsize>10</pointsize>
                            <weight>75</weight>
                            <bold>true</bold>
                           </font>
@@ -976,13 +976,13 @@ min-width:60px;
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>400</width>
+                        <width>700</width>
                         <height>0</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>700</width>
+                        <width>900</width>
                         <height>16777215</height>
                        </size>
                       </property>
@@ -996,6 +996,12 @@ min-width:60px;
                       </property>
                       <property name="toolTip">
                        <string>Results</string>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QLabel{
+	font-size:8pt;
+	font-weight: bold;
+}</string>
                       </property>
                       <property name="title">
                        <string>Results</string>
@@ -1207,8 +1213,7 @@ min-width:60px;
                                  </property>
                                  <property name="font">
                                   <font>
-                                   <family>Times New Roman</family>
-                                   <pointsize>12</pointsize>
+                                   <pointsize>8</pointsize>
                                    <weight>75</weight>
                                    <bold>true</bold>
                                   </font>
@@ -1454,7 +1459,9 @@ min-width:60px;
                               </property>
                               <property name="font">
                                <font>
-                                <family>Times New Roman</family>
+                                <pointsize>10</pointsize>
+                                <weight>75</weight>
+                                <bold>true</bold>
                                </font>
                               </property>
                               <property name="toolTip">
@@ -1535,7 +1542,9 @@ min-width:60px;
                               </property>
                               <property name="font">
                                <font>
-                                <family>Times New Roman</family>
+                                <pointsize>10</pointsize>
+                                <weight>75</weight>
+                                <bold>true</bold>
                                </font>
                               </property>
                               <property name="toolTip">
@@ -1616,7 +1625,9 @@ min-width:60px;
                               </property>
                               <property name="font">
                                <font>
-                                <family>Times New Roman</family>
+                                <pointsize>10</pointsize>
+                                <weight>75</weight>
+                                <bold>true</bold>
                                </font>
                               </property>
                               <property name="toolTip">
@@ -1637,7 +1648,7 @@ min-width:60px;
                              </widget>
                             </item>
                             <item>
-                             <spacer name="horizontalSpacer_13">
+                             <spacer name="horizontalSpacer_15">
                               <property name="orientation">
                                <enum>Qt::Horizontal</enum>
                               </property>
@@ -1650,18 +1661,6 @@ min-width:60px;
                              </spacer>
                             </item>
                            </layout>
-                          </item>
-                          <item>
-                           <widget class="Line" name="line_4">
-                            <property name="font">
-                             <font>
-                              <family>Times New Roman</family>
-                             </font>
-                            </property>
-                            <property name="orientation">
-                             <enum>Qt::Vertical</enum>
-                            </property>
-                           </widget>
                           </item>
                          </layout>
                         </widget>
@@ -1832,8 +1831,7 @@ QPushButton:pressed{
                                     <widget class="QLabel" name="label_29">
                                      <property name="font">
                                       <font>
-                                       <family>Times New Roman</family>
-                                       <pointsize>11</pointsize>
+                                       <pointsize>10</pointsize>
                                        <weight>75</weight>
                                        <bold>true</bold>
                                       </font>
@@ -2357,8 +2355,7 @@ QTableWidget {
                                  </property>
                                  <property name="font">
                                   <font>
-                                   <family>Times New Roman</family>
-                                   <pointsize>12</pointsize>
+                                   <pointsize>10</pointsize>
                                    <weight>75</weight>
                                    <bold>true</bold>
                                   </font>
@@ -2384,8 +2381,9 @@ QTableWidget {
                                  </property>
                                  <property name="font">
                                   <font>
-                                   <family>Times New Roman</family>
-                                   <pointsize>12</pointsize>
+                                   <pointsize>10</pointsize>
+                                   <weight>75</weight>
+                                   <bold>true</bold>
                                   </font>
                                  </property>
                                  <property name="frameShape">
@@ -2506,8 +2504,9 @@ QTableWidget {
                                   <widget class="QLabel" name="label_12">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>11</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -2602,8 +2601,9 @@ QTableWidget {
                                   <widget class="QLabel" name="label_16">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>11</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -2615,8 +2615,9 @@ QTableWidget {
                                   <widget class="QLabel" name="Gain_ratio">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>11</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -2677,8 +2678,9 @@ QTableWidget {
                                   <widget class="QLabel" name="label_15">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>11</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -2690,8 +2692,9 @@ QTableWidget {
                                   <widget class="QLabel" name="label_13">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>11</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -2749,8 +2752,9 @@ QTableWidget {
                                   <widget class="QLabel" name="label_9">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>11</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -2762,8 +2766,9 @@ QTableWidget {
                                   <widget class="QLabel" name="Exposure_time">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>11</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -2973,8 +2978,7 @@ QTableWidget {
                                      </property>
                                      <property name="font">
                                       <font>
-                                       <family>Times New Roman</family>
-                                       <pointsize>11</pointsize>
+                                       <pointsize>10</pointsize>
                                        <weight>75</weight>
                                        <bold>true</bold>
                                       </font>
@@ -3000,8 +3004,7 @@ QTableWidget {
                                      </property>
                                      <property name="font">
                                       <font>
-                                       <family>Times New Roman</family>
-                                       <pointsize>11</pointsize>
+                                       <pointsize>10</pointsize>
                                        <weight>75</weight>
                                        <bold>true</bold>
                                       </font>
@@ -3046,8 +3049,7 @@ QTableWidget {
                                      </property>
                                      <property name="font">
                                       <font>
-                                       <family>Times New Roman</family>
-                                       <pointsize>11</pointsize>
+                                       <pointsize>10</pointsize>
                                        <weight>75</weight>
                                        <bold>true</bold>
                                       </font>
@@ -3073,8 +3075,7 @@ QTableWidget {
                                      </property>
                                      <property name="font">
                                       <font>
-                                       <family>Times New Roman</family>
-                                       <pointsize>11</pointsize>
+                                       <pointsize>10</pointsize>
                                        <weight>75</weight>
                                        <bold>true</bold>
                                       </font>
@@ -3119,8 +3120,7 @@ QTableWidget {
                                      </property>
                                      <property name="font">
                                       <font>
-                                       <family>Times New Roman</family>
-                                       <pointsize>11</pointsize>
+                                       <pointsize>10</pointsize>
                                        <weight>75</weight>
                                        <bold>true</bold>
                                       </font>
@@ -3146,8 +3146,7 @@ QTableWidget {
                                      </property>
                                      <property name="font">
                                       <font>
-                                       <family>Times New Roman</family>
-                                       <pointsize>11</pointsize>
+                                       <pointsize>10</pointsize>
                                        <weight>75</weight>
                                        <bold>true</bold>
                                       </font>
@@ -3564,8 +3563,7 @@ QPushButton:pressed{
                                         </property>
                                         <property name="font">
                                          <font>
-                                          <family>Times New Roman</family>
-                                          <pointsize>12</pointsize>
+                                          <pointsize>10</pointsize>
                                           <weight>75</weight>
                                           <bold>true</bold>
                                          </font>
@@ -3591,8 +3589,7 @@ QPushButton:pressed{
                                         </property>
                                         <property name="font">
                                          <font>
-                                          <family>Times New Roman</family>
-                                          <pointsize>12</pointsize>
+                                          <pointsize>10</pointsize>
                                           <weight>75</weight>
                                           <bold>true</bold>
                                          </font>
@@ -3668,8 +3665,9 @@ QPushButton:pressed{
                               <widget class="QLabel" name="label_28">
                                <property name="font">
                                 <font>
-                                 <family>Times New Roman</family>
                                  <pointsize>10</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
                                 </font>
                                </property>
                                <property name="text">
@@ -3713,8 +3711,9 @@ QPushButton:pressed{
                               <widget class="QLabel" name="label_18">
                                <property name="font">
                                 <font>
-                                 <family>Times New Roman</family>
                                  <pointsize>10</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
                                 </font>
                                </property>
                                <property name="text">
@@ -3773,8 +3772,9 @@ QPushButton:pressed{
                               <widget class="QLabel" name="label_19">
                                <property name="font">
                                 <font>
-                                 <family>Times New Roman</family>
                                  <pointsize>10</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
                                 </font>
                                </property>
                                <property name="text">
@@ -3833,8 +3833,9 @@ QPushButton:pressed{
                               <widget class="QLabel" name="label_20">
                                <property name="font">
                                 <font>
-                                 <family>Times New Roman</family>
                                  <pointsize>10</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
                                 </font>
                                </property>
                                <property name="text">
@@ -4249,8 +4250,7 @@ QTableWidget {
                              </property>
                              <property name="font">
                               <font>
-                               <family>Times New Roman</family>
-                               <pointsize>12</pointsize>
+                               <pointsize>10</pointsize>
                                <weight>75</weight>
                                <bold>true</bold>
                               </font>
@@ -4283,8 +4283,9 @@ QTableWidget {
                                  <widget class="QLabel" name="label_26">
                                   <property name="font">
                                    <font>
-                                    <family>Times New Roman</family>
-                                    <pointsize>12</pointsize>
+                                    <pointsize>10</pointsize>
+                                    <weight>75</weight>
+                                    <bold>true</bold>
                                    </font>
                                   </property>
                                   <property name="text">
@@ -4460,8 +4461,7 @@ QTableWidget {
                                     </property>
                                     <property name="font">
                                      <font>
-                                      <family>Times New Roman</family>
-                                      <pointsize>11</pointsize>
+                                      <pointsize>10</pointsize>
                                       <weight>75</weight>
                                       <bold>true</bold>
                                      </font>
@@ -4536,8 +4536,7 @@ QTableWidget {
                                     </property>
                                     <property name="font">
                                      <font>
-                                      <family>Times New Roman</family>
-                                      <pointsize>11</pointsize>
+                                      <pointsize>10</pointsize>
                                       <weight>75</weight>
                                       <bold>true</bold>
                                      </font>
@@ -5605,8 +5604,9 @@ Qframe{
                                    </property>
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -5630,8 +5630,7 @@ Qframe{
                                    </property>
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
                                      <weight>75</weight>
                                      <bold>true</bold>
                                     </font>
@@ -5673,8 +5672,9 @@ Qframe{
                                   <widget class="QLabel" name="label_30">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -5698,8 +5698,7 @@ Qframe{
                                    </property>
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
                                      <weight>75</weight>
                                      <bold>true</bold>
                                     </font>
@@ -5741,8 +5740,9 @@ Qframe{
                                   <widget class="QLabel" name="label_32">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -5766,8 +5766,7 @@ Qframe{
                                    </property>
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
                                      <weight>75</weight>
                                      <bold>true</bold>
                                     </font>
@@ -5809,8 +5808,9 @@ Qframe{
                                   <widget class="QLabel" name="label_36">
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
+                                     <weight>75</weight>
+                                     <bold>true</bold>
                                     </font>
                                    </property>
                                    <property name="text">
@@ -5834,8 +5834,7 @@ Qframe{
                                    </property>
                                    <property name="font">
                                     <font>
-                                     <family>Times New Roman</family>
-                                     <pointsize>12</pointsize>
+                                     <pointsize>10</pointsize>
                                      <weight>75</weight>
                                      <bold>true</bold>
                                     </font>
@@ -6002,7 +6001,9 @@ Qframe{
                          <widget class="QLabel" name="label_10">
                           <property name="font">
                            <font>
-                            <family>Times New Roman</family>
+                            <pointsize>10</pointsize>
+                            <weight>75</weight>
+                            <bold>true</bold>
                            </font>
                           </property>
                           <property name="focusPolicy">
@@ -6128,8 +6129,9 @@ QPushButton:pressed{
         <widget class="QLabel" name="label_5">
          <property name="font">
           <font>
-           <family>Times New Roman</family>
            <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="cursor">

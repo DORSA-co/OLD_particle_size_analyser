@@ -8,6 +8,7 @@ from backend import colors, texts, camera_connection, photoviewer, image_grabbin
 from backend import database, reports, algo_settings, date, calender_ui
 
 
+
 class Ui(QtWidgets.QMainWindow):
     """this class is used to build class for mainwindow to load GUI application
 

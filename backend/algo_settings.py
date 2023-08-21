@@ -1,8 +1,27 @@
 from backend import database , texts, reports
 from PyQt5.QtWidgets import * #QTableWidgetItem, QHeaderView, QButtonGroup, QRadioButton, QLabel
 from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5.QtGui import *
 from mycolorpy import colorlist as mcp
 from functools import partial
+# from PyQt5.QtGui import QFrame
+
+class QHLine(QFrame):
+    def __init__(self):
+        super(QHLine, self).__init__()
+        self.setFrameShape(QFrame.HLine)
+        self.setFrameShadow(QFrame.Sunken)
+
+
+class QVLine(QFrame):
+    def __init__(self):
+        super(QVLine, self).__init__()
+        self.setFrameShape(QFrame.VLine)
+        self.setFrameShadow(QFrame.Sunken)
+
+
+
+
 
 def load_algo_params_from_db_to_ui(ui_obj):
     # get algo params from table
@@ -332,7 +351,17 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
     # ##### add selected range to labels in main window
     #### delete every obj in the layout
     deleteLayout(ui_obj.horizontalLayout_grading_percentages)
-    for i, range_ in enumerate(ranges_dict.values()):
+
+    ###### header labels
+    ui_obj.Vertical_Layout_0=QVBoxLayout()
+    ui_obj.Vertical_Layout_0.addWidget(QLabel('Ranges'))
+    ui_obj.Vertical_Layout_0.addWidget(QHLine())
+    ui_obj.Vertical_Layout_0.addWidget(QLabel('Percentages'))
+    ui_obj.horizontalLayout_grading_percentages.addLayout(ui_obj.Vertical_Layout_0)
+    ui_obj.horizontalLayout_grading_percentages.addWidget(QVLine())
+
+    for j, range_ in enumerate(ranges_dict.values()):
+        i = j + 1
         item2= ''
         range_ = str(range_)
         range_ = range_.replace(',', '-')
@@ -344,14 +373,25 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
         exec(label_percent + ".setAlignment(QtCore.Qt.AlignCenter)")
         exec("ui_obj.Vertical_Layout_" + str(i) + "=" + "QVBoxLayout()")
         exec("ui_obj.Vertical_Layout_" + str(i) + ".addWidget(" + label_range + ")")
+        exec("ui_obj.Vertical_Layout_" + str(i) + ".addWidget(QHLine())")
         exec("ui_obj.Vertical_Layout_" + str(i) + ".addWidget(" + label_percent + ")")
         exec("ui_obj.horizontalLayout_grading_percentages.addLayout("+"ui_obj.Vertical_Layout_" + str(i)+")")
+        ui_obj.horizontalLayout_grading_percentages.addWidget(QVLine())
 
     ##### add selected circularity to labels in main window
     #### delete every obj in the layout
     deleteLayout(ui_obj.horizontalLayout_cicularity_percentages)
+    ###### header labels
+    ui_obj.Vertical_Layout_0=QVBoxLayout()
+    ui_obj.Vertical_Layout_0.addWidget(QLabel('Circularity'))
+    ui_obj.Vertical_Layout_0.addWidget(QHLine())
+    ui_obj.Vertical_Layout_0.addWidget(QLabel('Percentages'))
+    ui_obj.horizontalLayout_cicularity_percentages.addLayout(ui_obj.Vertical_Layout_0)
+    ui_obj.horizontalLayout_cicularity_percentages.addWidget(QVLine())
+
     circularity_range = ['[0 - 0.2]', '[0.2 - 0.4]', '[0.4 - 0.6]', '[0.6 - 0.8]', '[0.8 - 1.0]']
-    for i, range_ in enumerate(circularity_range):
+    for j, range_ in enumerate(circularity_range):
+        j = i + 1
         item2= ''
         label_range = "ui_obj.cir_range_label_in_main_detection_page_" + str(i)
         exec(label_range  + "=QLabel(str(range_))")
@@ -361,8 +401,10 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
         exec(label_percent + ".setAlignment(QtCore.Qt.AlignCenter)")
         exec("ui_obj.Vertical_Layout_" + str(i) + "=" + "QVBoxLayout()")
         exec("ui_obj.Vertical_Layout_" + str(i) + ".addWidget(" + label_range + ")")
+        exec("ui_obj.Vertical_Layout_" + str(i) + ".addWidget(QHLine())")
         exec("ui_obj.Vertical_Layout_" + str(i) + ".addWidget(" + label_percent + ")")
         exec("ui_obj.horizontalLayout_cicularity_percentages.addLayout("+"ui_obj.Vertical_Layout_" + str(i)+")")
+        ui_obj.horizontalLayout_cicularity_percentages.addWidget(QVLine())
         
     
 
