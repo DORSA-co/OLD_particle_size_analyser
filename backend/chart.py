@@ -71,6 +71,7 @@ def create_ranges_chart_on_ui(ui_obj, axisX_title='Grading Range (mm)', axisY_ti
     
     # axisX
     axisX = QBarCategoryAxis()
+    print(ui_obj.algo_params.ranges_dict.values())
     axisX.append(['%s-%s' % (range_[0], range_[1]) for range_ in ui_obj.algo_params.ranges_dict.values()])
     axisX.setTitleText(axisX_title)
     ui_obj.chart.setAxisX(axisX, ui_obj.series)

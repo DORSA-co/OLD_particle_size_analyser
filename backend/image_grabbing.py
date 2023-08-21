@@ -15,6 +15,7 @@ class Camera_Image_Grabber_Worker(QtCore.QObject):
 
     finished = QtCore.pyqtSignal()
     show_image = QtCore.pyqtSignal(np.ndarray)
+    camera_fps = QtCore.pyqtSignal(str, str)
     
 
     def assign_parameters(self, ui_obj, camera_obj, show_image=False):
@@ -29,7 +30,7 @@ class Camera_Image_Grabber_Worker(QtCore.QObject):
         while not self.stop:
             try:
                 # get frame
-                start = time.time()
+                # start = time.time()
                 res, frame = self.camera_obj.getPictures()
     
                 if not res:
@@ -46,11 +47,14 @@ class Camera_Image_Grabber_Worker(QtCore.QObject):
             except Exception as e:
                 print(e)
                 continue
-
+            #### calculating FPS
             time.sleep(TIME_SLEEP)
-            end = time.time()
-            self.ui_obj.fps = 1/(end-start)
-        
+            # end = time.time()
+            self.ui_obj.fps = 1/((1/self.camera_obj.get_fps()) + TIME_SLEEP)
+            # print('fps: ', self.camera_obj.get_fps())
+            
+            ####### Sending to label
+            self.camera_fps.emit('label_fps', str(round(self.ui_obj.fps, 1)))
         # finish signal
         
         if self.ui_obj is not None:
@@ -119,6 +123,7 @@ class Image_Process_Worker(QtCore.QObject):
 
             # set n detected objects
             # self.update_n_detected.emit('n_detected_objects_label', str(n_objects))
+            
             self.camera_pfs.emit('label_fps', str(round(self.ui_obj.fps, 1)))
 
             # print('asd:', last_grading_infoes, grading_infoes)

@@ -24,7 +24,11 @@ class Ui(QtWidgets.QMainWindow):
         uic.loadUi('main_UI.ui', self)
         self.setWindowFlags(QtCore.Qt.WindowFlags(QtCore.Qt.FramelessWindowHint))
         
-
+        #
+        self.process_worker = None
+        #___________________________________________________________________________
+        #                             تابلوی ملک زاده
+        #___________________________________________________________________________
         # app language  
         self.language = 'en'
 
@@ -89,9 +93,9 @@ class Ui(QtWidgets.QMainWindow):
         self.image_frame.layout().addWidget(self.image_viewer)
         self.set_image_on_photoviewer(image=None, set_raw=True)
 
-        ##### calibration window
-        # self.image_viewer_calibration = photoviewer.PhotoViewer()
-        # self.calibration_fram.layout().addWidget(self.image_viewer_calibration)
+        #### calibration window
+        self.image_viewer_calibration = photoviewer.PhotoViewer()
+        self.calibration_fram.layout().addWidget(self.image_viewer_calibration)
         self.set_image_on_label_calib(image=None, set_raw=True)
         camera_settings.get_camera_params_from_db_to_ui(db_obj=self.db, ui_obj=self)
 
@@ -101,6 +105,10 @@ class Ui(QtWidgets.QMainWindow):
         for i in range(len(available_cameras)):
             self.comboBox_SerialNumber.addItem(str(available_cameras[i]))
 
+        # algorithms table
+        algo_settings.load_algo_params_from_db_to_ui(ui_obj=self)
+        algo_settings.load_ranges_from_db_to_ui(ui_obj=self)
+
         # chart
         chart.create_ranges_chart_on_ui(ui_obj=self)
         chart.create_circularity_chart_on_ui(ui_obj=self)
@@ -109,9 +117,7 @@ class Ui(QtWidgets.QMainWindow):
         reports.load_reports_from_db_to_ui(ui_obj=self)
         self.report_manager = reports.Report_Manager(ui_obj=self)
 
-        # algorithms table
-        algo_settings.load_algo_params_from_db_to_ui(ui_obj=self)
-        algo_settings.load_ranges_from_db_to_ui(ui_obj=self)
+        
 
 
     # def disable_application(self, disable = True):
@@ -444,12 +450,12 @@ class Ui(QtWidgets.QMainWindow):
         qImg = QtGui.QImage(image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
         pixmap = QtGui.QPixmap.fromImage(qImg)
         pixmap_image = QtGui.QPixmap(pixmap)
-        pixmap_image = pixmap_image.scaled(self.image_frame.height(), self.image_frame.height(), QtCore.Qt.KeepAspectRatio)
+        # pixmap_image = pixmap_image.scaled(self.image_frame.height(), self.image_frame.height(), QtCore.Qt.KeepAspectRatio)
         # pixmap_image = pixmap_image.scaled(800, 800, QtCore.Qt.KeepAspectRatio)
-        self.label_cam_setting_frame.setPixmap(pixmap_image)
+        # self.label_cam_setting_frame.setPixmap(pixmap_image)
         # self.graphicsView.setScene(pixmap_image)
         # set image on image viewer
-        # self.image_viewer_calibration.setPhoto(pixmap=pixmap_image)
+        self.image_viewer_calibration.setPhoto(pixmap=pixmap_image)
 
 
 
@@ -548,7 +554,10 @@ class Ui(QtWidgets.QMainWindow):
                 # camera connected, update ui fileds
                 self.show_message(label_name=None, text=texts.MESSEGES['camera_connect'][self.language], level=0, clearable=True)
                 self.camera_connect_flag = True
-                self.camera_connect_btn_5.setStyleSheet('QPushButton{border-right: 8px solid green;}')
+                self.camera_connect_btn_5.setStyleSheet('''QPushButton{background-color:
+                qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(12, 80, 139, 255),
+                stop:0.863636 rgba(12, 80, 139, 255), stop:0.885 rgba(0, 255, 0, 255),
+                stop:1 rgba(0, 255, 0, 255));}''')
                 #
                 
                 self.update_ui_labels(label=self.camera_connect_label, state=True)
@@ -573,7 +582,11 @@ class Ui(QtWidgets.QMainWindow):
             self.show_message(label_name=None, text=texts.WARNINGS['camera_disconnect'][self.language], level=1, clearable=True)
             self.camera_connect_flag = False
             #
-            self.camera_connect_btn_5.setStyleSheet('QPushButton{border-right: 8px solid red;}')
+            self.camera_connect_btn_5.setStyleSheet('''QPushButton{background-color:
+                qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(12, 80, 139, 255),
+                stop:0.863636 rgba(12, 80, 139, 255), stop:0.885 rgba(255, 0, 0, 255),
+                stop:1 rgba(255, 0, 0, 255));}''')
+                    
             self.start_capturing_btn_5.setEnabled(False)
             self.update_ui_labels(label=self.camera_connect_label, state=False)
             self.stop_capturing_btn_5.setEnabled(False)
@@ -603,8 +616,9 @@ class Ui(QtWidgets.QMainWindow):
 
     def stop_detect(self):
         # self.start_capturing_btn.setEnabled(False)
-        self.process_worker.stop = True
-        self.camera_worker.stop = True
+        if self.process_worker != None:
+            self.process_worker.stop = True
+            self.camera_worker.stop = True
         # self.stop_capturing_btn.setEnabled(True)
         self.start_capturing_btn_5.setEnabled(True)
         self.camera_connect_btn_5.setEnabled(True)
@@ -684,10 +698,10 @@ class Ui(QtWidgets.QMainWindow):
             self.process_thread.started.connect(partial(self.process_worker.process_frames))
             self.process_worker.finished.connect(partial(self.process_thread.quit))
             self.process_worker.show_image.connect(partial(self.set_image_on_photoviewer))
-            # self.process_worker.show_image.connect(partial(self.set_image_on_label_calib))
+            self.process_worker.show_image.connect(partial(self.set_image_on_label_calib))
             self.process_worker.update_chart.connect(partial(self.update_grading_chart))
             # self.process_worker.update_n_detected.connect(partial(self.set_text_on_label))
-            self.process_worker.camera_pfs.connect(partial(self.set_text_on_label))
+            
             self.process_thread.finished.connect(partial(self.process_thread.deleteLater))
             self.process_thread.start()
 

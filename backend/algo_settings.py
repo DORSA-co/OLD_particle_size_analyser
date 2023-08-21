@@ -308,6 +308,11 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
 
     for itr, range_ in enumerate(temp_array):
         ranges_dict[itr] = [float(range_.split('-')[0]), float(range_.split('-')[1])]
+    
+    ###### update dictionary ins start
+    ui_obj.algo_params.ranges_dict = ranges_dict
+    print('range list: ', ui_obj.algo_params.ranges_dict)
+
 
     for i in range(ui_obj.algo_params.number_ranges):
         ##### removing all ranges
@@ -329,6 +334,8 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
     deleteLayout(ui_obj.horizontalLayout_grading_percentages)
     for i, range_ in enumerate(ranges_dict.values()):
         item2= ''
+        range_ = str(range_)
+        range_ = range_.replace(',', '-')
         label_range = "ui_obj.range_label_in_main_detection_page_" + str(i)
         exec(label_range  + "=QLabel(str(range_))")
         exec(label_range + ".setAlignment(QtCore.Qt.AlignCenter)")
@@ -343,7 +350,7 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
     ##### add selected circularity to labels in main window
     #### delete every obj in the layout
     deleteLayout(ui_obj.horizontalLayout_cicularity_percentages)
-    circularity_range = ['[0 , 0.2]', '[0.2 , 0.4]', '[0.4 , 0.6]', '[0.6 , 0.8]', '[0.8 , 1.0]']
+    circularity_range = ['[0 - 0.2]', '[0.2 - 0.4]', '[0.4 - 0.6]', '[0.6 - 0.8]', '[0.8 - 1.0]']
     for i, range_ in enumerate(circularity_range):
         item2= ''
         label_range = "ui_obj.cir_range_label_in_main_detection_page_" + str(i)

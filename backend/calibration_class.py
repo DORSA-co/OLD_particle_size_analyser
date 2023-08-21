@@ -126,6 +126,7 @@ class calibration_class():
         self.camera_worker.moveToThread(self.camera_thread)
         # Connect signals and slots
         self.camera_worker.show_image.connect(partial(self.set_camera_frame_on_calibration))
+        self.camera_worker.camera_fps.connect(partial(self.ui_obj.set_text_on_label))
         self.camera_thread.started.connect(partial(self.camera_worker.grab_frame))
         self.camera_worker.finished.connect(partial(self.camera_thread.quit))
         self.camera_thread.finished.connect(partial(self.camera_thread.deleteLater))
