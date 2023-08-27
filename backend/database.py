@@ -66,7 +66,6 @@ class sqlite_database():
             pass
 
     def add_record(self, data, table_name, parametrs):
-        # print(data)
         args = "("
         for i,d in enumerate(data):
             if i != len(data)-1:
@@ -74,14 +73,12 @@ class sqlite_database():
             else:
                 args = args + "'%s'" % d
         args = args + ")"
-        # print(args)
         columns = "("
         for i,col in enumerate(parametrs):
             if i != len(parametrs)-1:
                 columns = columns + col + ","
             else:
                 columns = columns + col
-        # print(columns)
         columns = columns + ")"
 
 
@@ -92,21 +89,16 @@ class sqlite_database():
                                 VALUES 
                                 {} """.format(table_name, columns, args)
             
-            # print(insert_query)
             # execute query with input data
             self.database_cursor.execute(insert_query)
             self.database_connection.commit()
             return True
-
-    
-    
 
 
     def remove_record(self, col_name, id, table_name):
         try:
             if self.database_connection_flag:
                 delete_query = """DELETE FROM {} WHERE {}={};""".format(table_name,col_name,"'"+id+"'")
-                print(delete_query)
                 self.database_cursor.execute(delete_query)
                 self.database_connection.commit()
 
@@ -127,7 +119,6 @@ class sqlite_database():
                                     SET {} = {}
                                     WHERE {} ={} """.format(table_name, col_name, ("'"+value+"'"),id, ("'"+id_value+"'") if isinstance(id_value, str) else id_value)
                 
-                # print(mySql_insert_query)
                 self.database_cursor.execute(mySql_insert_query)
                 self.database_connection.commit()
 

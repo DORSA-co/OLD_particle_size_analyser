@@ -274,9 +274,6 @@ def change_default_range(ui_obj, range_description):
     load_ranges_from_db_to_ui(ui_obj=ui_obj)
 
 
-
-
-
 def delete_range(ui_obj):
     # get selected report in ui table
     selected_id = -1
@@ -330,8 +327,6 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
     
     ###### update dictionary ins start
     ui_obj.algo_params.ranges_dict = ranges_dict
-    print('range list: ', ui_obj.algo_params.ranges_dict)
-
 
     for i in range(ui_obj.algo_params.number_ranges):
         ##### removing all ranges
@@ -345,7 +340,6 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
     ##### update range dictionary in algo-params class
     ui_obj.algo_params.ranges_dict = ranges_dict
     ui_obj.algo_params.ranges_colors = mcp.gen_color(cmap='jet', n=len(ui_obj.algo_params.ranges_dict.keys()))
-    # print('ranges are set', ui_obj.algo_params.ranges_dict)
     reports.update_range_combobox_on_report_page(ui_obj)
     
     # ##### add selected range to labels in main window
@@ -391,7 +385,7 @@ def add_selected_range_to_ui(ui_obj, change_default_range_=True):
 
     circularity_range = ['[0 - 0.2]', '[0.2 - 0.4]', '[0.4 - 0.6]', '[0.6 - 0.8]', '[0.8 - 1.0]']
     for j, range_ in enumerate(circularity_range):
-        j = i + 1
+        i = j + 1
         item2= ''
         label_range = "ui_obj.cir_range_label_in_main_detection_page_" + str(i)
         exec(label_range  + "=QLabel(str(range_))")
@@ -425,11 +419,13 @@ def deleteLayout(cur_lay):
 
 
 def update_percentages_on_main_window(ui_obj, grading_percentages, circularity_percentages):
-    for i, range_percent in enumerate(grading_percentages):
+    for j, range_percent in enumerate(grading_percentages):
+        i = j + 1
         label_percent = "ui_obj.percentage_label_in_main_detection_page_" + str(i)
         exec(label_percent + '.setText(str(round(range_percent, 2)))')
 
-    for i, cir_percent in enumerate(circularity_percentages):
+    for j, cir_percent in enumerate(circularity_percentages):
+        i = j + 1
         label_percent = "ui_obj.cir_percentage_label_in_main_detection_page_" + str(i)
         exec(label_percent + '.setText(str(round(cir_percent, 2)))')
         

@@ -113,7 +113,10 @@ class Collector():
     
     
     def get_fps(self):
-        return self.camera.ResultingFrameRateAbs.GetValue()
+        try:
+            return self.camera.ResultingFrameRateAbs.GetValue()
+        except:
+            return 1
 
 
     def start_grabbing(self):
@@ -237,13 +240,8 @@ class Collector():
             # Error handling
             
             message = self.start_grabbing_error_handling(error=e)
-            #print(e)  
-        
             self.stop_grabbing()
-            #print("An exception occurred.", e.GetDescription())
             self.exitCode = 1
-
-
             
             return False, message
 

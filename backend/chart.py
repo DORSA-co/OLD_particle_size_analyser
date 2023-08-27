@@ -21,15 +21,12 @@ def update_chart(ui_obj, grading_params, circ_acc):
         ui_obj.circ_barset.replace(i, round(param,2))
 
 
-def reset_chart(ui_obj):
-    print('len:', len(ui_obj.algo_params.ranges_dict.keys()))   
+def reset_chart(ui_obj):  
     # for i in range(len(ui_obj.algo_params.ranges_dict.keys())):
     #     ui_obj.ranges_barset.replace(i, 0)
     
     for i in range(5):
         ui_obj.circ_barset.replace(i, 0)
-    
-    print('chart reset')
 
 
 def update_chart_reports(ui_obj, grading_params, circ_acc):
@@ -71,7 +68,6 @@ def create_ranges_chart_on_ui(ui_obj, axisX_title='Grading Range (mm)', axisY_ti
     
     # axisX
     axisX = QBarCategoryAxis()
-    print(ui_obj.algo_params.ranges_dict.values())
     axisX.append(['%s-%s' % (range_[0], range_[1]) for range_ in ui_obj.algo_params.ranges_dict.values()])
     axisX.setTitleText(axisX_title)
     ui_obj.chart.setAxisX(axisX, ui_obj.series)

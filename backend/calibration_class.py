@@ -8,6 +8,11 @@ import cv2
 from functools import partial
 from backend import camera_connection, camera_settings, image_grabbing, database
 
+
+CAMER_WIDTH = 1920
+CAMERA_HEIGHT = 1200
+
+
 class calibration_class():
     def __init__(self, ui_obj):
         self.ui_obj = ui_obj
@@ -26,16 +31,14 @@ class calibration_class():
             # check if cameras are connected to network
             self.ui_obj.comboBox_SerialNumber.clear()
             try:
-                # print("here")
+
                 collector = camera_connection.Collector(serial_number='', list_devices_mode=True)
                 serial_list = collector.serialnumber()
-                # print("test",serial_list)
 
                 self.ui_obj.comboBox_SerialNumber.addItem(str(serial_list[0]))
                 del collector
 
                 # first camera
-                # print(self.camera_params)
                 if self.camera_params[database.CAMERA_TRIGGER_MODE] == '0':
                     triggerMode = False
                 elif self.camera_params[database.CAMERA_TRIGGER_MODE] == '1':
@@ -48,8 +51,8 @@ class calibration_class():
                                                             delay_packet=6, 
                                                             packet_size=1500, 
                                                             frame_transmission_delay=0, 
-                                                            width=2448,
-                                                            height=2048, 
+                                                            width=CAMER_WIDTH,
+                                                            height=CAMERA_HEIGHT, 
                                                             offet_x=0, 
                                                             offset_y=0,
                                                             manual=True, 
@@ -57,12 +60,14 @@ class calibration_class():
                                                             trigger_source='Software')
      
                 res, _ = self.camera.start_grabbing()
-                print('res: ', res)
                 if res:
 
                     self.camera_connect_flag = True
                     # change camera-connect states
-                    self.ui_obj.camera_calib_btn.setStyleSheet('QPushButton{border-right: 8px solid green;}')
+                    self.ui_obj.camera_calib_btn.setStyleSheet('''QPushButton{background-color:
+                                                    qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(12, 80, 139, 255),
+                                                    stop:0.863636 rgba(12, 80, 139, 255), stop:0.885 rgba(0, 255, 0, 255),
+                                                    stop:1 rgba(0, 255, 0, 255));}''')
                     self.show_mesagges(label_name=self.ui_obj.msg_label_2, text='Camera connected successfully', color='green')
                     # make get picture button available
                     self.ui_obj.calib_btn.setEnabled(True)
@@ -74,7 +79,10 @@ class calibration_class():
             # error in connecting to cameras
             except Exception as e:
                 print(e)
-                self.ui_obj.camera_calib_btn.setStyleSheet('QPushButton{border-right: 8px solid red;}')
+                self.ui_obj.camera_calib_btn.setStyleSheet('''QPushButton{background-color:
+                                                    qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(12, 80, 139, 255),
+                                                    stop:0.863636 rgba(12, 80, 139, 255), stop:0.885 rgba(255, 0, 0, 255),
+                                                    stop:1 rgba(255, 0, 0, 255));}''')
                 self.show_mesagges(label_name=self.ui_obj.msg_label_2, text='Failed to connect to camera', color='red')
 
         # connected to cameras, try to dissconnect
@@ -87,15 +95,14 @@ class calibration_class():
             # change camera-connect states
             # self.stop_capturing()
             self.camera_connect_flag = False
-            self.ui_obj.camera_calib_btn.setStyleSheet('QPushButton{border-right: 8px solid red;}')
             self.ui_obj.calib_btn.setEnabled(False)
             self.ui_obj.camera_calib_btn.setEnabled(True)
             
-            
-            # self.set_image_to_ui(label_name=self.ui_obj.camera_live_label_2, image=None, no_image=True)
             # change camera-connect button text
-            
-            self.ui_obj.camera_calib_btn.setStyleSheet('QPushButton{border-right: 8px solid red;}')
+            self.ui_obj.camera_calib_btn.setStyleSheet('''QPushButton{background-color:
+                                                    qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(12, 80, 139, 255),
+                                                    stop:0.863636 rgba(12, 80, 139, 255), stop:0.885 rgba(255, 0, 0, 255),
+                                                    stop:1 rgba(255, 0, 0, 255));}''')
             # message
             self.show_mesagges(label_name=self.ui_obj.msg_label_2, text='Camera disconnected successfully', color='green')
             # self.update_ui_labels(label=self.ui_obj.camera_connect_label_2, state=False)
@@ -110,7 +117,6 @@ class calibration_class():
         try:
             camera_frame = self.camera.getPictures()
             self.camera_frame = camera_frame
-            print("frame ",self.camera_frame )
             return camera_frame
         except:
             self.show_mesagges(label_name=self.ui_obj.msg_label_2, text='connection failed', color='red')

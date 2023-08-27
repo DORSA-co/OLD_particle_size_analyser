@@ -176,7 +176,7 @@ def set_camera_params_from_ui_to_db(ui_obj):
     ui_obj.db.remove_record(col_name=database.CAMERA_ID, id='0', table_name=database.CAMERA_TABLE_NAME)
 
     # apply settings to single current camera
-    ui_obj.db.add_record(data=[0, '0', camera_params[database.CAMERA_EXPOSURE], camera_params[database.CAMERA_GAIN], camera_params[database.CAMERA_TRIGGER_MODE]], table_name=database.CAMERA_TABLE_NAME, parametrs=[database.CAMERA_ID, database.CAMERA_SERIAL, database.CAMERA_EXPOSURE, database.CAMERA_GAIN, database.CAMERA_TRIGGER_MODE])
+    ui_obj.db.add_record(data=[0, ui_obj.comboBox_SerialNumber.currentText(), camera_params[database.CAMERA_EXPOSURE], camera_params[database.CAMERA_GAIN], camera_params[database.CAMERA_TRIGGER_MODE]], table_name=database.CAMERA_TABLE_NAME, parametrs=[database.CAMERA_ID, database.CAMERA_SERIAL, database.CAMERA_EXPOSURE, database.CAMERA_GAIN, database.CAMERA_TRIGGER_MODE])
 
     
     
@@ -198,7 +198,6 @@ def get_camera_params_from_db_to_ui(db_obj, ui_obj):
 
     if res and len(camera_params)>0:
         camera_params = camera_params[0]
-        # print('here' , camera_params)
         ui_obj.exposure_time.setValue(int(camera_params[database.CAMERA_EXPOSURE]))
         ui_obj.Gain_ratio_2.setValue(int(camera_params[database.CAMERA_GAIN]))
         ui_obj.comboBox_TriggerMode.setCurrentIndex(int(camera_params[database.CAMERA_TRIGGER_MODE]))

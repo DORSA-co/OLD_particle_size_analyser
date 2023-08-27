@@ -7,7 +7,8 @@ import pandas as pd
 from backend import colors, texts, camera_connection, photoviewer, image_grabbing, detection, chart, camera_settings
 from backend import database, reports, algo_settings, date, calender_ui
 
-
+CAMER_WIDTH = 1920
+CAMERA_HEIGHT = 1200
 
 class Ui(QtWidgets.QMainWindow):
     """this class is used to build class for mainwindow to load GUI application
@@ -118,26 +119,6 @@ class Ui(QtWidgets.QMainWindow):
         reports.load_reports_from_db_to_ui(ui_obj=self)
         self.report_manager = reports.Report_Manager(ui_obj=self)
 
-        
-
-
-    # def disable_application(self, disable = True):
-    #     """enable or disable application
-
-    #     Args:
-    #         disable (bool, optional): _description_. Defaults to True.
-    #     """
-    #     if disable:
-    #         #### disable UI
-    #         self.Detection_tab.setEnabled(False)
-    #         self.Config_2.setEnabled(False)
-    #         self.report_tab.setEnabled(False)
-    #     else:
-    #         self.Detection_tab.setEnabled(True if self.user_accsess_levels[0] else False)
-    #         self.Config_2.setEnabled(True if self.user_accsess_levels[1] else False)
-    #         self.report_tab.setEnabled(True if self.user_accsess_levels[2] else False)
-
-
 
     def show_calender_start_date(self):
 
@@ -154,7 +135,6 @@ class Ui(QtWidgets.QMainWindow):
         cal = calender_ui.Calender(self, years, is_it_start=True)
         cal.show()
         self.search_report_start_date = cal.selected_date
-        # print(self.search_report_start_date)
 
 
     def show_calender_end_date(self):
@@ -170,7 +150,6 @@ class Ui(QtWidgets.QMainWindow):
         cal = calender_ui.Calender(self, years, is_it_start=False)
         cal.show()
         self.search_report_end_date = cal.selected_date
-        # print(self.search_report_end_date)
         
 
     def button_connector(self):
@@ -268,25 +247,15 @@ class Ui(QtWidgets.QMainWindow):
         Inputs: None
         Returns: None
         """
-        # h,w,_ = ima
-        # self.image_frame.setMaximumWidth(self.label_main_frame.width())
-        # self.image_frame.setMinimumWidth(800)#self.label_main_frame.height())
+
         if self.isMaximized():
             self.showNormal()
             self.maximize_btn.setToolTip(texts.TITLES['maximize'][self.language])  
-
-
-            # self.image_viewer.
-            # self.image_viewer.fitInView(ui=self)
 
         else:
             self.showMaximized()
             self.groupBox_2
             self.maximize_btn.setToolTip(texts.TITLES['restore_down'][self.language])  
-
-            # self.image_viewer.fitInView(ui=self)
-
-
     
 
     def minimize_win(self):
@@ -412,13 +381,6 @@ class Ui(QtWidgets.QMainWindow):
         qImg = QtGui.QImage(image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
         pixmap = QtGui.QPixmap.fromImage(qImg)
         pixmap_image = QtGui.QPixmap(pixmap)
-
-        # label_main_frame
-        # pixmap_image = pixmap_image.scaled(self.label_main_frame.height(), self.label_main_frame.height(), QtCore.Qt.KeepAspectRatio)
-        # pixmap_image = pixmap_image.scaled(800, 800, QtCore.Qt.KeepAspectRatio)
-        # self.label_main_frame.setPixmap(pixmap_image)
-        # self.image_frame.setMaximumWidth(self.label_main_frame.height())
-        # self.image_frame.setMinimumWidth(self.label_main_frame.height())
         
         # set image on image viewer
         self.image_viewer.setPhoto(pixmap=pixmap_image)
@@ -451,10 +413,7 @@ class Ui(QtWidgets.QMainWindow):
         qImg = QtGui.QImage(image.data, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
         pixmap = QtGui.QPixmap.fromImage(qImg)
         pixmap_image = QtGui.QPixmap(pixmap)
-        # pixmap_image = pixmap_image.scaled(self.image_frame.height(), self.image_frame.height(), QtCore.Qt.KeepAspectRatio)
-        # pixmap_image = pixmap_image.scaled(800, 800, QtCore.Qt.KeepAspectRatio)
-        # self.label_cam_setting_frame.setPixmap(pixmap_image)
-        # self.graphicsView.setScene(pixmap_image)
+
         # set image on image viewer
         self.image_viewer_calibration.setPhoto(pixmap=pixmap_image)
 
@@ -537,28 +496,26 @@ class Ui(QtWidgets.QMainWindow):
                     triggerMode = False
                 elif self.cam_settings[database.CAMERA_TRIGGER_MODE] == '1':
                     triggerMode = True
-                # print(self.cam_settings)
                 
                
                 self.collector = camera_connection.Collector(serial_number=self.cam_settings[database.CAMERA_SERIAL], 
                                     gain=self.cam_settings[database.CAMERA_GAIN], exposure=self.cam_settings[database.CAMERA_EXPOSURE],
                                      max_buffer=20, trigger=triggerMode, delay_packet=50, packet_size=1500,
-                                      frame_transmission_delay=0, width=2448, height=2048, offet_x=0, offset_y=0,
+                                      frame_transmission_delay=0, width=CAMER_WIDTH, height=CAMERA_HEIGHT, offet_x=0, offset_y=0,
                                        manual=True, list_devices_mode=False, trigger_source='Software')
                 res, _ = self.collector.start_grabbing()
-                
-                # print(res)
+
                 if not res:
                     self.show_message(label_name=None, text=texts.ERRORS['camera_connect_failed'][self.language], level=2, clearable=True)
                     return
-                # self.label_fps.setText(str(self.collector.get_fps()))
+               
                 # camera connected, update ui fileds
                 self.show_message(label_name=None, text=texts.MESSEGES['camera_connect'][self.language], level=0, clearable=True)
                 self.camera_connect_flag = True
                 self.camera_connect_btn_5.setStyleSheet('''QPushButton{background-color:
-                qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(12, 80, 139, 255),
-                stop:0.863636 rgba(12, 80, 139, 255), stop:0.885 rgba(0, 255, 0, 255),
-                stop:1 rgba(0, 255, 0, 255));}''')
+                                                    qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(12, 80, 139, 255),
+                                                    stop:0.863636 rgba(12, 80, 139, 255), stop:0.885 rgba(0, 255, 0, 255),
+                                                    stop:1 rgba(0, 255, 0, 255));}''')
                 #
                 
                 self.update_ui_labels(label=self.camera_connect_label, state=True)
