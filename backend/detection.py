@@ -101,10 +101,8 @@ class Algo_Params():
     def update_params(self):
         
         self.ranges_dict.clear()
-        # self.set_ranges_from_db_to_ui(self.ui_obj)
         algo_settings.add_selected_range_to_ui(self.ui_obj)
         self.apply_category_range()
-        # print('ranges_dict',self.ranges_dict)
         self.ranges_colors = mcp.gen_color(cmap='jet', n=len(self.ranges_dict.keys()))
         # other parameters
         self.blur_ksize = int(self.ui_obj.blur_ksize_spin_2.value())
@@ -228,41 +226,27 @@ class Algo_Params():
             
             #### low part of range must be lower than higher part!!! 
             if self.ranges_dict[i][0] > self.ranges_dict[i][1]:
-                # print("error in row: ", i+1)
                 self.ui_obj.show_message(self.ui_obj.label_msg_range, "error in row: "+str(i+1),level=1, clearable = True)
                 if i > 0:
 
                     ##### higher part and lower part of next part must be same
                     if self.ranges_dict[i][0] != self.ranges_dict[i-1][1]:
-                        # print("missing some part of range in line: ", i+1)
+
                         self.ui_obj.show_message(self.ui_obj.label_msg_range, "missing some part of range in line: "+str(i+1),level=1, clearable = True)
             
-            
-            print(self.ranges_dict)
             self.ranges_colors = mcp.gen_color(cmap='jet', n=len(self.ranges_dict.keys()))
         reports.update_range_combobox_on_report_page(self.ui_obj)
         
-
         # add to database
         if add_to_db:
             algo_settings.add_range_to_db(ui_obj=self.ui_obj, ranges_dict=self.ranges_dict)
         reports.update_range_combobox_on_report_page(self.ui_obj)
-     ######
-    # def set_ranges_from_db_to_ui(self, ui_obj):
-    
-    #     # add to db
-    #     res, ranges_list = ui_obj.db.retrive_all(table_name=database.RANGES_TABLE_NAME)
-    #     if not res:
-    #         return
-        
-    #     cur_idx = 0 if len(ranges_list)==0 else ranges_list[-1][database.RANGES_ID]
-    #     ui_obj.db.add_record(data=[int(cur_idx)+1, range_description, range_string], table_name=database.RANGES_TABLE_NAME, parametrs=[database.RANGES_ID, database.RANGES_DESCRIPTION, database.RANGES_RANGES])
+
 
     def apply_to_add_db(self):
         button_answer = self.ui_obj.show_alert_window(title=texts.TITLES['error'][self.ui_obj.language], message=texts.WARNINGS['are_you_sure'][self.ui_obj.language], need_confirm=True)
         if button_answer == True:
-            self.apply_category_range(add_to_db=True)
-            
+            self.apply_category_range(add_to_db=True)       
     
   
     ###### calibration function
@@ -273,10 +257,7 @@ class Algo_Params():
         if self.obj_calibration_class.camera_connect_flag:
             # stop frame grabbing thread
             self.obj_calibration_class.camera_worker.stop = True
-
-            # frame = self.obj_calibration_class.start_capturing()
             frame = self.obj_calibration_class.frame_to_detect
-            # print(frame)
             
             min_area = self.ui_obj.small_area_box.value()
             max_area = self.ui_obj.large_area_box.value()
@@ -287,7 +268,6 @@ class Algo_Params():
             if success_flag:    
                 df = pd.DataFrame(data=self.Calibration_Coefficients)
                 df.to_csv('params.csv', header=['params'])
-                print("Calibrate prams: ",self.Calibration_Coefficients)
                 self.ui_obj.show_message(self.ui_obj.label_calibA, str(self.Calibration_Coefficients[0]), clearable = False)
                 self.ui_obj.show_message(self.ui_obj.label_calibB, str(self.Calibration_Coefficients[1]), clearable = False)
                 self.ui_obj.show_message(self.ui_obj.label_pxvalue, str(self.Calibration_Coefficients[2]), clearable = False)
@@ -527,12 +507,12 @@ class Grading():
         if self.debug:
             cv2.imshow('Grading Results', cv2.resize(image, None, fx=self.debug_scale, fy=self.debug_scale))
             cv2.waitKey(0)
-
+        print('n_objects: ', self.n_objects)
+        
+        
         if self.grading_ranges_arr.sum() != 0: 
-            print('n_objrcts: ', self.n_objects)
             return image, (self.grading_ranges_arr / self.grading_ranges_arr.sum()) * 100, self.circ_acc_array, self.n_objects
         else:
-            print('n_objrcts: ', self.n_objects)
             return image, (self.grading_ranges_arr) * 100, self.circ_acc_array, self.n_objects
 
 
